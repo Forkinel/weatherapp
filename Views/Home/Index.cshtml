@@ -1,0 +1,59 @@
+﻿
+
+@model WeatherDemo.Models.ServiceResponse
+@{
+    ViewData["Title"] = "Home Page";
+
+}
+
+<div>
+    <h3>Weather Checker</h3>
+    <center>
+        <form asp-controller="Home" asp-action="Index">
+            <table>
+                <tr>
+                    <td>Location: </td>
+                    <td><input type="text" id="txtLocation" name="LocationName" /></td>
+
+                    <td><input type="submit" value="Submit" /></td>
+                </tr>
+                @if(Model!= null && !Model.IsSuccess)
+                {
+                        <tr><td>@Model.ErrorMessage</td></tr>
+                }
+             
+            </table>
+            <hr />
+        </form>
+    </center>
+    @if (Model != null && Model.IsSuccess)
+    {
+        var weatherData = Model.WeatherData;
+        <div class="container">
+            <div class="row"><div class="col-md-12 weather-header">Weather for @Html.DisplayFor(modelItem => weatherData.location)</div></div>
+            <div class="row"><div class="col-md-12 current-temp">Current Temp : @Html.DisplayFor(modelItem => weatherData.main.temp) °C</div></div>
+            <div class="row">
+                <div class="col-md-6 max-temp">
+                    Max Temp<BR />
+                    @Html.DisplayFor(modelItem => weatherData.main.temp_max) °C
+                </div>
+                <div class="col-md-6 min-temp">Min Temp<BR />@Html.DisplayFor(modelItem => weatherData.main.temp_min) °C</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 humidity">
+                    Humidity<BR />@Html.DisplayFor(modelItem => weatherData.main.humidity) %
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 sunrise">
+                    Sunrise<BR />
+                    @Html.DisplayFor(modelItem => weatherData.convertedSunriseTime)
+                </div>
+                <div class="col-md-6 sunset">Sunset<BR />@Html.DisplayFor(modelItem => weatherData.convertedSunsetTime)</div>
+            </div>
+        </div>
+       
+    }
+            
+
+</div>
